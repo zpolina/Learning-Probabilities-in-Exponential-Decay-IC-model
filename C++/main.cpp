@@ -12,10 +12,10 @@ int main()
     data_gen.readGraph(filename, graph);
     data_gen.setProbabilities(graph);
     int eta = 5, delta = 24;
-    int number_of_seedsets = 20;
+    int number_of_seedsets = 2;
     vector<Spread> spreads;
     for(int ttt = 0; ttt < number_of_seedsets; ttt++) {
-        int seed_set_size =10;
+        int seed_set_size =1;
         Set seed_set = data_gen.generateSeedSet(seed_set_size, graph.N);
         Spread spread;
         data_gen.generateSpread(graph, seed_set, spread, eta, delta);

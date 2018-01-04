@@ -8,9 +8,9 @@ double GradientCompute::P_func(int w, int S){
   double result = 1;
   int w_act = activ_time[S][w];
   for(int tau =0; tau<delta; tau++){
-    for(int v =0; v<nodes_num; v++){
-      if (matrix[w][v]!= -1 && activ_time[S][v] == (w_act-1-tau)){
-        result = result * (1 - matrix[w][v]*exp(-tau/eta));
+    for(auto & v: inv_graph.adj_list[w]){
+      if (matrix[w][v.end]!= -1 && activ_time[S][v.end] == (w_act-1-tau)){
+        result = result * (1 - matrix[w][v.end]*exp(-tau/eta));
       }
     }
   }
@@ -33,9 +33,9 @@ double GradientCompute::Part_deriv_P(int S, int v, int w){
   int w_act = activ_time[S][w];
   double result = 1;
   for(int tau = 0; tau < delta; tau++){
-    for(int v_prime =0; v_prime<nodes_num; v_prime++){
-      if(matrix[w][v_prime]!= -1 && activ_time[S][v_prime]==w_act-1-tau && v_prime!=v){
-        result *= (1-matrix[w][v_prime]*exp(-tau/eta));
+    for(auto & v_prime: inv_graph.adj_list[w]){
+      if(matrix[w][v_prime.end]!= -1 && activ_time[S][v_prime.end]==w_act-1-tau && v_prime.end!=v){
+        result *= (1-matrix[w][v_prime.end]*exp(-tau/eta));
       }
     }
   }

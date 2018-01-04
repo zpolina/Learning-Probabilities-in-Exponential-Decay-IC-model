@@ -14,6 +14,7 @@ public:
   int number_of_seedsets;
   int nodes_num;
   Graph graph;
+  Graph inv_graph;
   GradientCompute(double** matrix, Graph graph, vector<Spread> &spreads,int eta, int delta, int number_of_seedsets, int nodes_num){
     this->matrix = matrix;
     this->graph = graph;
@@ -37,6 +38,14 @@ public:
         }
       }
     }
+    inv_graph.N = graph.N;
+    inv_graph.adj_list = new AdjList[inv_graph.N];
+    for(int i = 0; i < graph.N; i++){
+      for(int j=0; j<graph.adj_list[i].size(); j++){
+        inv_graph.adj_list[graph.adj_list[i][j].end].push_back(Edge(i));
+      }
+    }
+
   }
   double P_func(int w, int S);
   double Z_func(int S, int v, int w);
