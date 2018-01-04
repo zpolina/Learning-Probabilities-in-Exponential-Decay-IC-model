@@ -1,4 +1,3 @@
-
 #include "DataGeneration.h"
 using namespace std;
 
@@ -25,16 +24,19 @@ void DataGeneration::readGraph(string filename, Graph &graph)
             graph.adj_list[starting_node].push_back(Edge(*it));
         }
     }
+    file.close();
 }
 
 void DataGeneration::writeSpreadToFile(string filename, Spread spread) {
-    /*ofstream file(filename);
+    ofstream file(filename);
     file << spread.size() << endl;
-    int a;
-    while(cin >> a) {
-        cout << spread[a].size() << endl;
+    for(int i = 0; i < spread.size(); i++) {
+        file << i << '\t';
+        for(Set::iterator it = spread[i].begin(); it != spread[i].end(); it++)
+            file << (*it) << ' ';
+        file << endl;
     }
-    file.close()*/
+    file.close();
 }
 
 void DataGeneration::setProbabilities(Graph graph, int prob_min, int prob_max)

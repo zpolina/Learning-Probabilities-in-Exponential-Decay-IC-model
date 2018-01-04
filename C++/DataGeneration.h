@@ -16,10 +16,8 @@ using namespace std;
 
 class DataGeneration{
 public:
-  DataGeneration(){
-
-  };
-  ~DataGeneration(){};
+  DataGeneration(){}
+  ~DataGeneration(){}
   void readGraph(string filename, Graph &graph);
   void writeSpreadToFile(string filename, Spread spread);
   void setProbabilities(Graph graph, int prob_min=0, int prob_max=1);
