@@ -2,6 +2,7 @@
 #include "GradientCompute.h"
 #include <vector>
 
+
 using namespace std;
 int main()
 {
@@ -20,7 +21,16 @@ int main()
         data_gen.generateSpread(graph, seed_set, spread, eta, delta);
         spreads.push_back(spread);
     }
-    GradientCompute gradient(graph, spreads);
+    double** matrix = new double*[graph.N];
+    for (int i =0; i<graph.N; i++){
+      matrix[i] = new double[graph.N];
+    }
+    for (int i =0; i < graph.N; i++){
+      for(int j = 0; j< graph.adj_list[i].size(); j++){
+        matrix[graph.adj_list[i][j].end][i] = 0.5;///should be random initial values of probabilities
+      }
+    }
 
-
+    GradientCompute gradient(matrix, graph, spreads, eta, delta, number_of_seedsets, graph.N);
+    gradient.GradientDescent(5, 0.001);
 }
