@@ -2,6 +2,7 @@
 #define GRADIENTCOMPUTE_H
 
 #include "types.h"
+#include "iostream"
 using namespace std;
 
 class GradientCompute{
@@ -29,11 +30,14 @@ public:
 
 
     activ_time = new int*[number_of_seedsets];
-    for(int i = 0; i < spreads.size(); i++){
+    for(int i = 0; i < number_of_seedsets; i++){
       activ_time[i] = new int[graph.N];
+      //memset(activ_time[i], 1, graph.N * sizeof(int));
       for(int j = 0; j < spreads[i].size(); j++){
         for(auto k : spreads[i][j]) {
+          //if(activ_time[i][k]==-1){
             activ_time[i][k] = j;
+          //}
         }
       }
     }
@@ -45,9 +49,10 @@ public:
         inv_graph.adj_list[graph.adj_list[i][j].end].push_back(Edge(i));
       }
     }
+
   }
   double P_func(int w, int S);
-  double Z_func(int S, int v, int w);
+  double Z_func(int S, int v, int w, bool flag);
   double Part_deriv_P(int S, int v, int w);
   double Gradient(int v, int w);
   double** GradientDescent(int iter, double alpha);
