@@ -6,6 +6,7 @@
 using namespace std;
 int main()
 {
+    srand(time(NULL));
     string filename = "../graphs/facebook_graph.txt";
     Graph graph;
     DataGeneration data_gen;
@@ -24,13 +25,24 @@ int main()
     double** matrix = new double*[graph.N];
     for (int i =0; i<graph.N; i++){
       matrix[i] = new double[graph.N];
+      for(int j=0; j<graph.N; j++){
+        matrix[i][j]= -1;
+      }
     }
     for (int i =0; i < graph.N; i++){
-      for(int j = 0; j< graph.adj_list[i].size(); j++){
-        matrix[graph.adj_list[i][j].end][i] = 0.5;///should be random initial values of probabilities
+      for(auto& w: graph.adj_list[i]){
+        matrix[i][w.end] =  0.5;//(double)rand() / (double)RAND_MAX ;;///should be random initial values of probabilities
       }
     }
 
-    GradientCompute gradient(matrix, graph, spreads, eta, delta, number_of_seedsets, graph.N);
-    gradient.GradientDescent(5, 0.001);
+    GradientCompute gradient;
+    gradient.ValueAssigning(matrix, graph, spreads, eta, delta, number_of_seedsets, graph.N);
+    double** res_matrix = gradient.GradientDescent(20, 0.001);
+    for(int i=0; i<graph.N; i++){
+      for(int j=0; j<graph.N; j++){
+        if(res_matrix[i][j]!=-1){
+          cout<<i<<"  "<<j<<"  "<<res_matrix[i][j]<<endl;
+        }
+      }
+    }
 }

@@ -41,7 +41,6 @@ void DataGeneration::writeSpreadToFile(string filename, Spread spread) {
 
 void DataGeneration::setProbabilities(Graph graph, int prob_min, int prob_max)
 {
-    srand(time(NULL));
 
     for(int i = 0; i < graph.N; i++)
         for(int j = 0; j < graph.adj_list[i].size(); j++)
@@ -52,7 +51,6 @@ Set DataGeneration::generateSeedSet(int size, int num_nodes)
 {
     Set res;
 
-    srand(time(NULL));
     while(res.size() < size){
         int r;
         do{
@@ -75,7 +73,7 @@ void DataGeneration::generateSpread(Graph graph, Set seed_set, Spread &D, int et
     for(Set::iterator it = seed_set.begin(); it != seed_set.end(); it++)
         D[0].insert(*it);
 
-    srand(time(NULL));
+
     while(stable == false) {
         D.push_back(Set());
         stable = true;
