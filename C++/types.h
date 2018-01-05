@@ -12,6 +12,10 @@ public:
         end = e;
         prob = 0;
     }
+    Edge(double e, double p) {
+        end = e;
+        prob = p;
+    }
     bool operator < (const Edge& rhs) const
     {
         return (this->end < rhs.end);

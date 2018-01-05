@@ -83,7 +83,7 @@ double** GradientCompute::GradientDescent(int iter, double alpha0){
           sum += abs(w.prob - matrix[v][w.end]);
       }
     }
-    cout<<sum<<endl;
+    //cout<<sum<<endl;
   }
   return matrix;
 }
