@@ -74,7 +74,7 @@ int main()
         }
       }
       for(int i =0; i<graph.N; i++){
-          if(for_plot.find(learned_activ_time[i])==for_plot.end()){
+          if(for_plot.find(learned_activ_time[i] - activ_time[i])==for_plot.end()){
             for_plot[learned_activ_time[i]-activ_time[i]] = 1;
           }else{
             for_plot[learned_activ_time[i] - activ_time[i]]++;
