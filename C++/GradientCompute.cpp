@@ -39,7 +39,7 @@ double GradientCompute::Part_deriv_P(int S, int v, int w){
       }
     }
   }
-  result *=result*exp(-(w_act - activ_time[S][v] -1)/eta);
+  result *= exp(-(w_act - activ_time[S][v] -1)/eta);
   return result;
 }
 
@@ -50,7 +50,7 @@ double GradientCompute::Gradient(int v, int w){
       int w_act = activ_time[S][w];
       int v_act = activ_time[S][v];
       if(matrix[v][w]!=-1 && v_act <= (w_act -1) && v_act >= (w_act-delta-1)){
-        result += result + 1/P_func(w,S)*Part_deriv_P(S,v,w) + Z_func(S,v,w);
+        result +=  1/P_func(w,S)*Part_deriv_P(S,v,w) + Z_func(S,v,w);
       }
     }
   }
@@ -58,14 +58,15 @@ double GradientCompute::Gradient(int v, int w){
 }
 
 double** GradientCompute::GradientDescent(int iter, double alpha){
-  double sum = 0;
   for(int i=0; i<iter; i++){
+    double sum = 0;
     for(int v= 0; v<nodes_num; v++){
       for(auto& w: graph.adj_list[v]){
           matrix[v][w.end] -= alpha* Gradient(v,w.end);
-          sum += abs(graph.adj_list[v][w].prob - matrix[v][w.end])
+          sum += abs(graph.adj_list[v][w.end].prob - matrix[v][w.end]);
       }
     }
+    cout<<sum<<endl;
   }
   return matrix;
 }
